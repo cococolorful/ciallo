@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'math'
+project = 'ciallo'
 copyright = '2024, cococolorful'
 author = 'cococolorful'
 release = 'v0.1'

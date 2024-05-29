@@ -11,4 +11,4 @@ Welcome to math's documentation!
    :caption: Contents:
 
 
-   ru
+   memory
