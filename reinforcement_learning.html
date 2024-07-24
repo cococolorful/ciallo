@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ch-ZN" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>强化学习 &mdash; ciallo v0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=6c75a96f"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Memory" href="memory.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ciallo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="memory.html">Memory</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">强化学习</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">基本概念</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">基本要素</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#state">状态（State）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#action-space">动作空间（Action Space）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#policy">策略（Policy）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reward-function">奖励函数（Reward Function）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trajectory">轨迹（Trajectory）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#return">回报（Return）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">基本问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#value-function">值函数（Value Function）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ciallo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">强化学习</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/reinforcement_learning.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>强化学习<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>强化学习旨在解决 <strong>决策</strong> 问题。例如，在十字路口等待交通信号灯时，面对红灯我们应该等待还是继续前进？面对绿灯时呢？我们应该采取同样的动作吗？</p>
+<p>对于一些简单的决策问题，我们可以依靠固定的规则进行解决。例如，面对红灯时就停止，面对绿灯时就前进。然而，对于复杂的决策问题，我们往往无法找到固定的规则，此时强化学习是一条可以尝试的方案。</p>
+<p>强化学习的基本思想是，通过不断尝试，找到最优的决策策略。例如，在十字路口等待交通信号灯时，我们可以尝试等待和前进，然后根据结果选择最优的策略。</p>
+<section id="id2">
+<h2>基本概念<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>具体而言，强化学习把决策问题建模成 <strong>智能体（Agent）</strong> 和 <strong>环境（Environment）</strong> 之间的 <strong>交互过程</strong>。如下图所示，在整个过程中，智能体根据当前状态选择一个动作，环境根据智能体的动作返回下一个状态和奖励。通过最大化可以得到的奖励，优化智能体的决策能力，即根据当前状态选择一个 <strong>最佳</strong> 的动作。</p>
+</section>
+<section id="id3">
+<h2>基本要素<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>强化学习主要包括以下基本要素：</p>
+<section id="state">
+<h3>状态（State）<a class="headerlink" href="#state" title="Link to this heading"></a></h3>
+<p>状态 <span class="math notranslate nohighlight">\(S\)</span> 指的是当前环境的状态
+- （State）：当前环境的状态，记为 。</p>
+</section>
+<section id="action-space">
+<h3>动作空间（Action Space）<a class="headerlink" href="#action-space" title="Link to this heading"></a></h3>
+<p>：在当前状态下可以采取的行动空间，记为 <span class="math notranslate nohighlight">\(A\)</span>。</p>
+</section>
+<section id="policy">
+<h3>策略（Policy）<a class="headerlink" href="#policy" title="Link to this heading"></a></h3>
+<p>：在给定状态下，选择某个行动的规则，记为 <span class="math notranslate nohighlight">\(\pi\)</span>。</p>
+</section>
+<section id="reward-function">
+<h3>奖励函数（Reward Function）<a class="headerlink" href="#reward-function" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>：采取某个行动后，环境给予的反馈，记为 <span class="math notranslate nohighlight">\(R\)</span>。</p></li>
+</ul>
+<p>他们之间存在着一定的联系：</p>
+<ul class="simple">
+<li><p>奖励与当前的状态和采取的行动有关，即 <span class="math notranslate nohighlight">\(r = R(s, a)\)</span></p></li>
+<li><p>策略决定了在当前状态下采取哪个行动，即 <span class="math notranslate nohighlight">\(a = \pi(s)\)</span></p></li>
+<li><p>状态转移函数决定了在当前状态下采取某个行动后，下一个状态是什么，即 <span class="math notranslate nohighlight">\(s' = T(s, a)\)</span></p></li>
+</ul>
+</section>
+<section id="trajectory">
+<h3>轨迹（Trajectory）<a class="headerlink" href="#trajectory" title="Link to this heading"></a></h3>
+<p>由于RL是一个交互过程，于是又衍生出一个概念叫做 <strong>轨迹（Trajectory）</strong>，它表示的是智能体在环境中的行动轨迹，记为 <span class="math notranslate nohighlight">\(\tau = (s_0, a_0, s_1, a_1, s_2, a_2, \cdots)\)</span>。</p>
+<p>其中，环境的初始状态 <span class="math notranslate nohighlight">\(s_0\)</span> 是一个随机变量，而后续的状态 <span class="math notranslate nohighlight">\(s_1, s_2, \cdots\)</span> 是由状态转移函数 <span class="math notranslate nohighlight">\(T\)</span> 和策略 <span class="math notranslate nohighlight">\(\pi\)</span> 决定的:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}s_{t+1} = T(s_t, a_t)\\a_t = \pi(s_t)\end{aligned}\end{align} \]</div>
+</section>
+<section id="return">
+<h3>回报（Return）<a class="headerlink" href="#return" title="Link to this heading"></a></h3>
+<p>强化学习是一个试错的过程，我们需要在每一个时刻，对智能体的行为进行评价，即奖励函数 <span class="math notranslate nohighlight">\(R\)</span>。其中，对于t时刻的奖励，记为 <span class="math notranslate nohighlight">\(r_t\)</span>，公式表示为</p>
+<div class="math notranslate nohighlight">
+\[r_t = R(s_t, a_t)\]</div>
+<div class="math notranslate nohighlight">
+\[\]</div>
+<p>然而，仅仅考虑当前时刻的奖励，并不能够很好地评价智能体的行为，因为智能体的行为往往会对后续的状态产生影响。因此，我们引入了 <strong>回报（Return）</strong> 的概念，它表示的是智能体在 <span class="math notranslate nohighlight">\(t\)</span> 时刻及以后时刻得到的奖励之和，即：</p>
+<div class="math notranslate nohighlight">
+\[G(\tau) = \sum_{t=0}^{\infty} \gamma^t r_t\]</div>
+<p>其中， <span class="math notranslate nohighlight">\(\gamma\)</span> 是一个介于0和1之间的折扣因子，它表示了智能体对未来的奖励的重视程度。当 <span class="math notranslate nohighlight">\(\gamma = 0\)</span> 时，智能体只考虑当前时刻的奖励，而忽略未来的奖励；当 <span class="math notranslate nohighlight">\(\gamma = 1\)</span> 时，智能体对未来的奖励给予与当前时刻奖励相同的重要性。</p>
+</section>
+</section>
+<section id="id4">
+<h2>基本问题<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>强化学习需要解决的问题，就是使得智能体在给定策略 <span class="math notranslate nohighlight">\(\pi\)</span> 下，能够最大化期望回报 <span class="math notranslate nohighlight">\(\mathbb{E}[G|\pi]\)</span>。</p>
+<p>在已知策略 <span class="math notranslate nohighlight">\(\pi\)</span> 和环境状态转移方程的情况下，我们可以先得到轨迹的分布。</p>
+<div class="math notranslate nohighlight">
+\[P(\tau | \pi) = P(s_0) \prod_{t=0}^{\infty} P(s_{t+1} | s_t, a_t) P(a_t | s_t, \pi)\]</div>
+<p>然后，在此策略 <span class="math notranslate nohighlight">\(\pi\)</span> 下的期望回报可以表示为:</p>
+<div class="math notranslate nohighlight">
+\[J(\pi) = \mathbb{E}[G|\pi] = \int G(\tau) P(\tau | \pi) d\tau\]</div>
+<p>因此，强化学习的基本问题，就是找到最优策略 <span class="math notranslate nohighlight">\(\pi^*\)</span>，使得期望回报 最大，即:</p>
+<div class="math notranslate nohighlight">
+\[\pi^* = \arg \max_{\pi} J(\pi)\]</div>
+<section id="value-function">
+<h3>值函数（Value Function）<a class="headerlink" href="#value-function" title="Link to this heading"></a></h3>
+<p>值函数（Value Function）是强化学习中的一个重要概念，它表示的是智能体在给定策略 <span class="math notranslate nohighlight">\(\pi\)</span> 下，从状态 <span class="math notranslate nohighlight">\(s\)</span> 出发，期望得到的回报。值函数可以分为两种：</p>
+<ol class="arabic simple">
+<li><p>状态值函数（State Value Function）：表示的是智能体在给定策略 <span class="math notranslate nohighlight">\(\pi\)</span> 下，从状态 <span class="math notranslate nohighlight">\(s\)</span> 出发，期望得到的回报。</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[v_{\pi}(s) = \mathbb{E}[G | s_0 = s, \pi]\]</div>
+<ol class="arabic simple" start="2">
+<li><p>动作值函数（Action Value Function）：表示的是智能体在给定策略 <span class="math notranslate nohighlight">\(\pi\)</span> 下，从状态 <span class="math notranslate nohighlight">\(s\)</span> 出发，执行动作 <span class="math notranslate nohighlight">\(a\)</span>，期望得到的回报。</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[q_{\pi}(s, a) = \mathbb{E}[G | s_0 = s, a_0 = a, \pi]\]</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="memory.html" class="btn btn-neutral float-left" title="Memory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, cococolorful.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
