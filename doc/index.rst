@@ -10,5 +10,6 @@ Welcome to math's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
    memory
+   reinforcement_learning
+   
